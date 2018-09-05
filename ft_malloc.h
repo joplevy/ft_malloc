@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 15:39:03 by jplevy            #+#    #+#             */
-/*   Updated: 2018/09/04 17:59:20 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/09/05 15:31:29 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_all_infos
 	size_t		tiny_node_size;
 	size_t		small_size;
 	size_t		small_node_size;
+	size_t		page_size;
 }				t_all_infos;
 
 extern t_all_infos g_all_infos;
