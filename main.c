@@ -41,7 +41,7 @@ t_list	*ft_init_one_map(size_t size)
 		{
 			while (list->next)
 				list = list->next;
-			list->next = list + 4;
+			list->next = (void*)((long)list + (long)sizeof(t_list));
 			list = list->next;
 		}
 	}
@@ -57,7 +57,7 @@ t_list	*ft_init_one_map(size_t size)
 		{
 			while (list->next)
 				list = list->next;
-			list->next = list + sizeof(t_list);
+			list->next = (void*)((long)list + (long)sizeof(t_list));
 			list = list->next;
 		}
 	}
@@ -73,7 +73,7 @@ t_list	*ft_init_one_map(size_t size)
 		{
 			while (list->next)
 				list = list->next;
-			list->next = list + sizeof(t_list);
+			list->next = (void*)((long)list + (long)sizeof(t_list));
 			list = list->next;
 		}
 	}
@@ -86,7 +86,7 @@ t_list	*ft_init_one_map(size_t size)
 		printf("cant allocate\n");
 		return (NULL);
 	}
-	printf("%u\n", size);
+	printf("%zu\n", size);
 	write(1, "starttt\n", 8);
 	list->content_size = size;
 	printf("startttt\n");
@@ -105,7 +105,7 @@ void	ft_init_sizes()
 	g_all_infos.tiny_node_size = g_all_infos.tiny_size / 128;
 	g_all_infos.small_size = page_size * 32;
 	g_all_infos.small_node_size = g_all_infos.small_size / 128;
-	printf("page_size = %u\ntiny_size = %u\ntiny_node_size = %u\nsmall_size = %u\nsmall_node_size = %u\n",\
+	printf("page_size = %zu\ntiny_size = %zu\ntiny_node_size = %zu\nsmall_size = %zu\nsmall_node_size = %zu\n",\
 	g_all_infos.page_size,
 	g_all_infos.tiny_size,
 	g_all_infos.tiny_node_size,
@@ -132,7 +132,7 @@ void 	*ft_malloc(size_t size)
 	{
 		if (!(g_all_infos.tiny_mapping) || (head->nb_tiny != 0 && head->nb_tiny % 128 == 0))
 		{
-			printf("initiatizing tiny sizeof (t_list) is %xu\n", sizeof(t_list));
+			printf("initiatizing tiny sizeof (t_list) is %d\n", (int)sizeof(t_list));
 			if (!(ft_init_one_map(g_all_infos.tiny_size)))
 				return (NULL);
 			
@@ -181,13 +181,13 @@ int			main(void)
 	int i;
 
 	i = -1;
-	while (++i <= 4096 * 128)
+	while (++i <= 171 * 128)
 		ft_malloc(0);
-	i = -1;
-	while (++i <= 1280)
-		ft_malloc(150);
-	ft_malloc(10000);
-	ft_malloc(10000);
-	ft_malloc(10000);
+	// i = -1;
+	// while (++i <= 1280)
+	// 	ft_malloc(150);
+	// ft_malloc(10000);
+	// ft_malloc(10000);
+	// ft_malloc(10000);
     return (0);
 }

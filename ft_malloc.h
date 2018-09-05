@@ -51,6 +51,7 @@ t_all_infos g_all_infos = {
 	0,
 	0,
 	0,
+	0,
 	0
 };
 
