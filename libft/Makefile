@@ -6,7 +6,7 @@
 #    By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/04 14:21:43 by jplevy            #+#    #+#              #
-#    Updated: 2018/09/05 15:14:11 by jplevy           ###   ########.fr        #
+#    Updated: 2018/09/06 10:43:10 by jplevy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,17 +77,17 @@ SRC_NAME = ft_bzero.c \
 		   ft_lstmap.c \
 		   ft_power.c \
 		   get_next_line.c \
+		   ft_abs.c \
+		   ft_lstfree.c \
+		   ft_lstdelnode.c \
+		   ft_get_args.c \
 		   ft_printf/ft_printf.c\
 		   ft_printf/get_args.c\
 		   ft_printf/ft_itoa_base.c\
 		   ft_printf/ft_number.c\
 		   ft_printf/flags.c \
 		   ft_printf/ft_wide_char.c \
-		   ft_printf/altnorme.c \
-		   ft_abs.c \
-		   ft_lstfree.c \
-		   ft_lstdelnode.c \
-		   ft_get_args.c
+		   ft_printf/altnorme.c 
 
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

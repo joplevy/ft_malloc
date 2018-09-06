@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 15:38:59 by jplevy            #+#    #+#             */
-/*   Updated: 2018/09/05 17:58:38 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/09/06 11:21:27 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 t_list	*ft_init_one_map(size_t size)
 {
 	t_list	*list;
+	int		i;
 	
 	printf("start\n");
 	if (size == g_all_infos.tiny_size)
@@ -39,9 +40,13 @@ t_list	*ft_init_one_map(size_t size)
 		}
 		else
 		{
-			while (list->next)
+			i = 0;
+			while (++i && list->next)
 				list = list->next;
-			list->next = (void*)((long)list + (long)sizeof(t_list));
+			if (i == 0 || i != (g_all_infos.page_size / (sizeof(t_list))))
+				list->next = (void*)((long)list + (long)sizeof(t_list));
+			else if (!(list->next = (t_list *)(mmap(0, g_all_infos.page_size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0))))
+				return (NULL);
 			list = list->next;
 		}
 	}
@@ -55,9 +60,13 @@ t_list	*ft_init_one_map(size_t size)
 		}
 		else
 		{
-			while (list->next)
+			i = 0;
+			while (++i && list->next)
 				list = list->next;
-			list->next = (void*)((long)list + (long)sizeof(t_list));
+			if (i == 0 || i != (g_all_infos.page_size / (sizeof(t_list))))
+				list->next = (void*)((long)list + (long)sizeof(t_list));
+			else if (!(list->next = (t_list *)(mmap(0, g_all_infos.page_size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0))))
+				return (NULL);
 			list = list->next;
 		}
 	}
@@ -71,25 +80,22 @@ t_list	*ft_init_one_map(size_t size)
 		}
 		else
 		{
-			while (list->next)
+			i = 0;
+			while (++i && list->next)
 				list = list->next;
-			list->next = (void*)((long)list + (long)sizeof(t_list));
+			if (i == 0 || i != (g_all_infos.page_size / (sizeof(t_list))))
+				list->next = (void*)((long)list + (long)sizeof(t_list));
+			else if (!(list->next = (t_list *)(mmap(0, g_all_infos.page_size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0))))
+				return (NULL);
 			list = list->next;
 		}
 	}
-	write(1, "startt\n", 7);
-	// void *toto = mmap(0, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-	write(1, "wakll\n", 6);
-	// list->content = NULL;
 	if (!(list->content = mmap(0, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0)))
 	{
 		printf("cant allocate\n");
 		return (NULL);
 	}
-	printf("%zu\n", size);
-	write(1, "starttt\n", 8);
 	list->content_size = size;
-	printf("startttt\n");
 	list->next = NULL;
 	printf("end\n");	
 	return (list);
@@ -183,9 +189,12 @@ int			main(void)
 	i = -1;
 	while (++i <= 171 * 128)
 		ft_malloc(0);
-	// i = -1;
-	// while (++i <= 1280)
-	// 	ft_malloc(150);
+	i = -1;
+	while (++i <= 170 * 128)
+		ft_malloc(150);
+		i = -1;
+	while (++i <= 170 * 128)
+		ft_malloc(1500);
 	// ft_malloc(10000);
 	// ft_malloc(10000);
 	// ft_malloc(10000);
