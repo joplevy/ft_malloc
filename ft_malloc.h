@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 15:39:03 by jplevy            #+#    #+#             */
-/*   Updated: 2018/09/05 15:31:29 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/09/07 13:09:19 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,26 @@
 // # include <fcntl.h>
 // # define mmap(p1,p2,p3,p4,p5,p6) NULL
 
-typedef struct	s_header
+// typedef struct	s_header
+// {
+// 	int			nb_tiny;
+// 	int			nb_small;
+// 	t_list		*tiny_mapping;
+// 	t_list		*small_mapping;
+// 	t_list		*other_mapping;
+// }				t_header;
+
+typedef struct	s_arena_container
 {
-	int			nb_tiny;
-	int			nb_small;
-}				t_header;
+	t_list						*zones;
+	size_t						nb_alloc;
+	struct s_arena_container	*next;
+}				t_arena_container;
 
 typedef struct	s_all_infos
 {
-	t_list		*tiny_mapping;
-	t_list		*small_mapping;
+	t_arena_container			*tiny_mapping;
+	t_arena_container			*small_mapping;
 	t_list		*other_mapping;
 	size_t		tiny_size;
 	size_t		tiny_node_size;
@@ -41,6 +51,7 @@ typedef struct	s_all_infos
 	size_t		small_node_size;
 	size_t		page_size;
 }				t_all_infos;
+
 
 extern t_all_infos g_all_infos;
 
