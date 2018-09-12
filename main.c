@@ -29,23 +29,21 @@ t_arena_container	*ft_init_one_map(size_t size)
 	t_arena_container	*cont;
 	// int		i;
 	
-	printf("start\n");
-	if (size == g_all_infos.tiny_size)
+	if (size == g_all_infos.tiny_size || size == g_all_infos.small_size)
 	{
-		if ((cont = g_all_infos.tiny_mapping) == NULL)
+		if ((cont = (size == g_all_infos.tiny_size) ? g_all_infos.tiny_mapping : g_all_infos.small_mapping) == NULL || cont->arena_id % (g_all_infos.page_size / sizeof(t_arena_container)) == 0)
 		{
-			printf("lol\n");
 			if (!(cont = (t_arena_container *)(mmap(0, g_all_infos.page_size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0))))
 				return (NULL);
 		}
 		else
 		{
 			cont = (t_arena_container *)((long)cont + (long)sizeof(t_arena_container));
-			printf("%p\n", cont);
 		}
 	}
 	cont->zones = NULL;
-	// cont->next = NULL;
+	cont->next = NULL;
+	cont->arena_id = 0;
 	cont->nb_alloc = 0;
 	return (cont);
 	// 		if (!(g_all_infos.tiny_mapping = (t_list *)(mmap(0, g_all_infos.page_size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0))))
@@ -156,6 +154,7 @@ void 	*ft_malloc(size_t size)
 			if (!(cont = ft_init_one_map(g_all_infos.tiny_size)))
 				return (NULL);
 			cont->next = g_all_infos.tiny_mapping;
+			cont->arena_id = (cont->next) ? cont->next->arena_id + 1 : 1;
 			printf("%p %p %p\n", cont, cont->next, g_all_infos.tiny_mapping);
 			g_all_infos.tiny_mapping = cont;
 			printf("%p %p %p\n", cont, cont->next, g_all_infos.tiny_mapping);
@@ -170,6 +169,33 @@ void 	*ft_malloc(size_t size)
 			// printf("node nb %i at %p is %p\n", j, li, li->content);
 		}
 		g_all_infos.tiny_mapping->nb_alloc += 1;
+		// printf("give tiny malloc");
+		// g_all_infos.nb_tiny += 1;
+		// printf("loaded\n");
+	}
+	else if (size <= g_all_infos.small_node_size)
+	{
+		if (!(g_all_infos.small_mapping) || g_all_infos.small_mapping->nb_alloc == 128)
+		{
+			printf("initiatizing small sizeof (t_list) is %d\n", (int)sizeof(t_arena_container));
+			if (!(cont = ft_init_one_map(g_all_infos.small_size)))
+				return (NULL);
+			cont->next = g_all_infos.small_mapping;
+			cont->arena_id = (cont->next) ? cont->next->arena_id + 1 : 1;
+			printf("%p %p %p\n", cont, cont->next, g_all_infos.small_mapping);
+			g_all_infos.small_mapping = cont;
+			printf("%p %p %p\n", cont, cont->next, g_all_infos.small_mapping);
+			
+			// int j = -1;
+			// t_list *li = g_all_infos.tiny_mapping;
+			// while (++j < g_all_infos.nb_tiny / 128)
+			// {
+			// 	// printf("node nb %i at %p is %p\n", j, li, li->content);
+			// 	li = li->next;
+			// }
+			// printf("node nb %i at %p is %p\n", j, li, li->content);
+		}
+		g_all_infos.small_mapping->nb_alloc += 1;
 		// printf("give tiny malloc");
 		// g_all_infos.nb_tiny += 1;
 		// printf("loaded\n");
@@ -208,16 +234,17 @@ int			main(void)
 	t_arena_container *list;
 
 	i = -1;
-	while (++i <= 1256)
+	while (++i <= 128 * 1280)
 		ft_malloc(0);
 	list = g_all_infos.tiny_mapping;
-	i = -1;
-	while (++i  && list->next)
-	{
-		printf("i = %d list = %p nb_aloc = %d\n", i, list, list->nb_alloc);
-		list = list->next;
-	}
-	printf("i = %d list = %p nb_aloc = %d\n", i, list, list->nb_alloc);
+	// i = 0;
+	// while (list->next)
+	// {
+	// 	printf("i = %d list = %p nb_aloc = %d id = %d\n", i, list, list->nb_alloc, list->arena_id);
+	// 	list = list->next;
+	// 	i++;
+	// }
+	// printf("i = %d list = %p nb_aloc = %d id = %d\n", i, list, list->nb_alloc, list->arena_id);
 	i = -1;
 	while (++i <= 170 * 128)
 		ft_malloc(150);
