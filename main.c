@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 15:38:59 by jplevy            #+#    #+#             */
-/*   Updated: 2018/09/14 14:41:49 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/09/15 21:16:32 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_arena_container	*ft_init_one_map(size_t size)
 {
 	t_arena_container	*cont;
 	
+	cont = NULL;
 	if (size == g_all_infos.tiny_size || size == g_all_infos.small_size)
 	{
 		if ((cont = (size == g_all_infos.tiny_size) ? g_all_infos.tiny_mapping : g_all_infos.small_mapping) == NULL || cont->arena_id % (g_all_infos.page_size / sizeof(t_arena_container)) == 0)
@@ -128,6 +129,8 @@ void		print_mem(t_arena_container *zones, char *type)
 {
 	t_arena_container	*tmp;
 	t_list				*tmp_l;
+	t_list				*st_tmp_l;
+	size_t 				tot_size;
 
 	// TINY : 0xA0000
 	// 0xA0020 - 0xA004A : 42 octets
@@ -138,14 +141,17 @@ void		print_mem(t_arena_container *zones, char *type)
 	// 0xB0020 - 0xBBEEF : 48847 octets
 	// Total : 52698 octets
 	tmp = zones;
+	tot_size = 0;
 	while (tmp)
 	{
-		printf("%s : 0x%05X\n", type, (long)(((t_list *)tmp->first)->content) & 0xFFFFF);
+		ft_printf("%s : 0x%05X\n", type, (long)(((t_list *)tmp->first)->content) & 0xFFFFF);
 		tmp_l = tmp->zones;
+		st_tmp_l = tmp_l;
 		while(tmp_l)
 		{
-			printf("0x%05X - 0x%05X : %d octets\n", (long)tmp_l->content & 0xFFFFF, (long)(tmp_l->content + tmp_l->content_size) & 0xFFFFF, tmp_l->content_size);
-			tmp_l = (tmp_l->next == tmp->first) ? NULL : tmp_l->next;
+			if (tmp_l->content_size > 0)
+				ft_printf("%p - 0x%05X : %d octets\n", (long)(tmp_l->content), (long)(tmp_l->content + tmp_l->content_size) & 0xFFFFF, tmp_l->content_size);
+			tmp_l = (tmp_l->next == st_tmp_l) ? NULL : tmp_l->next;
 		}
 		tmp = tmp->next;
 	}
@@ -163,13 +169,13 @@ void		show_alloc_mem()
 int			main(void)
 {
 	int i;
-	t_arena_container *list;
+	// t_arena_container *list;
 
 	i = -1;
-	while (++i <= 128)
+	while (++i <= 1024)
 		ft_malloc(i);
-	show_alloc_mem();
 		// printf("malloc nb %i at %p\n", i, ft_malloc(i));
+	show_alloc_mem();
 	// list = g_all_infos.tiny_mapping;
 	// i = 0;
 	// while (list->next)

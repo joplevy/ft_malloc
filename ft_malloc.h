@@ -33,7 +33,7 @@
 typedef struct					s_arena_container
 {
 	t_list						*zones;
-	void						*first;
+	t_list						*first;
 	size_t						nb_alloc;
 	size_t						arena_id;
 	struct s_arena_container	*next;
