@@ -21,29 +21,29 @@
 // # include <fcntl.h>
 // # define mmap(p1,p2,p3,p4,p5,p6) NULL
 
-// typedef struct	s_header
-// {
-// 	int			nb_tiny;
-// 	int			nb_small;
-// 	t_list		*tiny_mapping;
-// 	t_list		*small_mapping;
-// 	t_list		*other_mapping;
-// }				t_header;
+typedef struct					s_addr_list
+{
+	void						*content;
+	size_t						content_size;
+	struct s_addr_list			*next;
+	struct s_addr_list			*prev;
+}								t_addr_list;
 
 typedef struct					s_arena_container
 {
-	t_list						*zones;
-	t_list						*first;
+	t_addr_list					*zones;
+	t_addr_list					*first;
 	size_t						nb_alloc;
 	size_t						arena_id;
 	struct s_arena_container	*next;
+	struct s_arena_container	*prev;
 }								t_arena_container;
 
 typedef struct					s_all_infos
 {
 	t_arena_container			*tiny_mapping;
 	t_arena_container			*small_mapping;
-	t_list						*other_mapping;
+	t_addr_list					*other_mapping;
 	size_t						tiny_node_size;
 	size_t						tiny_size;
 	size_t						small_size;

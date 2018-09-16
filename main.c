@@ -6,21 +6,21 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 15:38:59 by jplevy            #+#    #+#             */
-/*   Updated: 2018/09/15 21:16:32 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/09/16 17:51:39 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-t_list				*ft_init_zones(size_t size)
+t_addr_list				*ft_init_zones(size_t size)
 {
-	t_list	*ret;
-	t_list	*tmp;
+	t_addr_list	*ret;
+	t_addr_list	*tmp;
 	void	*map;
 	int		i;
 
 	if (!(map = mmap(0, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0)) \
-	|| !(ret =(t_list *)(mmap(0, g_all_infos.page_size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0))))
+	|| !(ret =(t_addr_list *)(mmap(0, g_all_infos.page_size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0))))
 		return (NULL);
 	i = -1;
 	tmp = ret;
@@ -29,7 +29,8 @@ t_list				*ft_init_zones(size_t size)
 		tmp->content = map;
 		map += size / 128;
 		tmp->content_size = 0;
-		tmp->next = (i < 127) ? (t_list *)((long)tmp + (long)sizeof(t_list)) : ret;
+		tmp->next = (i < 127) ? (t_addr_list *)((long)tmp + (long)sizeof(t_addr_list)) : ret;
+		tmp->next->prev = tmp;
 		// printf("tmp=%p and ret=%p and content=%p\n", tmp, ret, tmp->content);
 		tmp = tmp->next;
 	}
@@ -58,6 +59,7 @@ t_arena_container	*ft_init_one_map(size_t size)
 		return (NULL);
 	cont->first = cont->zones;
 	cont->next = NULL;
+	cont->prev = NULL;
 	cont->arena_id = 0;
 	cont->nb_alloc = 0;
 	return (cont);
@@ -69,15 +71,16 @@ void	ft_init_sizes()
 
 	page_size = getpagesize();
 	g_all_infos.page_size = page_size;
-	g_all_infos.tiny_size = page_size * 2;
+	g_all_infos.tiny_size = page_size * 4;
 	g_all_infos.tiny_node_size = g_all_infos.tiny_size / 128;
-	g_all_infos.small_size = page_size * 32;
+	g_all_infos.small_size = page_size * 64;
 	g_all_infos.small_node_size = g_all_infos.small_size / 128;
 }
 
 void 	*ft_malloc(size_t size)
 {
 	t_arena_container	*cont;
+	t_addr_list			*big;
 	void				*ret;
 
 	if (g_all_infos.tiny_size == 0 || g_all_infos.tiny_node_size == 0 \
@@ -88,10 +91,12 @@ void 	*ft_malloc(size_t size)
 	{
 		if (!(g_all_infos.tiny_mapping) || g_all_infos.tiny_mapping->nb_alloc == 128)
 		{
-			// printf("initiatizing tiny sizeof (t_list) is %d\n", (int)sizeof(t_arena_container));
+			// printf("initiatizing tiny sizeof (t_addr_list) is %d\n", (int)sizeof(t_arena_container));
 			if (!(cont = ft_init_one_map(g_all_infos.tiny_size)))
 				return (NULL);
 			cont->next = g_all_infos.tiny_mapping;
+			if (g_all_infos.tiny_mapping)
+				g_all_infos.tiny_mapping->prev = cont;
 			cont->arena_id = (cont->next) ? cont->next->arena_id + 1 : 1;
 			g_all_infos.tiny_mapping = cont;
 		}
@@ -105,7 +110,7 @@ void 	*ft_malloc(size_t size)
 	{
 		if (!(g_all_infos.small_mapping) || g_all_infos.small_mapping->nb_alloc == 128)
 		{
-			// printf("initiatizing small sizeof (t_list) is %d\n", (int)sizeof(t_arena_container));
+			// printf("initiatizing small sizeof (t_addr_list) is %d\n", (int)sizeof(t_arena_container));
 			if (!(cont = ft_init_one_map(g_all_infos.small_size)))
 				return (NULL);
 			cont->next = g_all_infos.small_mapping;
@@ -121,50 +126,59 @@ void 	*ft_malloc(size_t size)
 	else
 	{
 		printf("initiatizing big\n");
+		if (!(big = ft_init_big(size)))
+			return (NULL);
+		big->next = g_all_infos.other_mapping;
+		g_all_infos.other_mapping = cont;
 	}
 	return (NULL);
 }
 
-void		print_mem(t_arena_container *zones, char *type)
+size_t		print_mem(t_arena_container *zones, char *type)
 {
 	t_arena_container	*tmp;
-	t_list				*tmp_l;
-	t_list				*st_tmp_l;
+	t_addr_list				*tmp_l;
+	t_addr_list				*st_tmp_l;
 	size_t 				tot_size;
 
-	// TINY : 0xA0000
-	// 0xA0020 - 0xA004A : 42 octets
-	// 0xA006A - 0xA00BE : 84 octets
-	// SMALL : 0xAD000
-	// 0xAD020 - 0xADEAD : 3725 octets
-	// LARGE : 0xB0000
-	// 0xB0020 - 0xBBEEF : 48847 octets
-	// Total : 52698 octets
 	tmp = zones;
+	while (tmp->next)
+		tmp = tmp->next;
 	tot_size = 0;
 	while (tmp)
 	{
-		ft_printf("%s : 0x%05X\n", type, (long)(((t_list *)tmp->first)->content) & 0xFFFFF);
+		ft_printf("%s : %p\n", type, (long)(((t_addr_list *)tmp->first)->content));
 		tmp_l = tmp->zones;
 		st_tmp_l = tmp_l;
 		while(tmp_l)
 		{
+			tot_size += tmp_l->content_size;
 			if (tmp_l->content_size > 0)
-				ft_printf("%p - 0x%05X : %d octets\n", (long)(tmp_l->content), (long)(tmp_l->content + tmp_l->content_size) & 0xFFFFF, tmp_l->content_size);
+				ft_printf("%p - %p : %zu octets\n", (long)(tmp_l->content), (long)(tmp_l->content + tmp_l->content_size), tmp_l->content_size);
 			tmp_l = (tmp_l->next == st_tmp_l) ? NULL : tmp_l->next;
 		}
-		tmp = tmp->next;
+		tmp = tmp->prev;
 	}
+	return (tot_size);
 }
 
 void		show_alloc_mem()
 {
 	// faire le tri des zones
+	size_t 				tot_size;
+
+	tot_size = 0;	
 	if (g_all_infos.tiny_mapping)
-		print_mem(g_all_infos.tiny_mapping, "TINY");
+		tot_size += print_mem(g_all_infos.tiny_mapping, "TINY");
 	if (g_all_infos.small_mapping)
-		print_mem(g_all_infos.small_mapping, "SMALL");
+		tot_size += print_mem(g_all_infos.small_mapping, "SMALL");
+	ft_printf("Total : %zu octets\n", tot_size);
 }
+
+// void		free(void *ptr)
+// {
+// dans malloc si le container est full, verifier que les autres ont pas eu de free depuis avant de refaire un container
+// }
 
 int			main(void)
 {
@@ -175,7 +189,7 @@ int			main(void)
 	while (++i <= 1024)
 		ft_malloc(i);
 		// printf("malloc nb %i at %p\n", i, ft_malloc(i));
-	show_alloc_mem();
+	// show_alloc_mem();
 	// list = g_all_infos.tiny_mapping;
 	// i = 0;
 	// while (list->next)
