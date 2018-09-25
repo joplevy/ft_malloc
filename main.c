@@ -65,6 +65,19 @@ t_arena_container	*ft_init_one_map(size_t size)
 	return (cont);
 }
 
+t_addr_list		*ft_init_big(size_t size)
+{
+	t_addr_list	*ret;
+
+	if (!(ret = (t_addr_list *)(mmap(0, size + sizeof(t_addr_list), PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0))))
+		return (NULL);
+	ret->content = (void*)((long)ret + (long)sizeof(t_addr_list));
+	ret->content_size = size;
+	ret->next = NULL;
+	ret->prev = NULL;
+	return (ret);
+}
+
 void	ft_init_sizes()
 {
 	size_t		page_size;
@@ -125,11 +138,13 @@ void 	*ft_malloc(size_t size)
 	}
 	else
 	{
-		printf("initiatizing big\n");
+		// printf("initiatizing big\n");
 		if (!(big = ft_init_big(size)))
 			return (NULL);
+		if (g_all_infos.other_mapping)
+			g_all_infos.other_mapping->prev = big;
 		big->next = g_all_infos.other_mapping;
-		g_all_infos.other_mapping = cont;
+		g_all_infos.other_mapping = big;
 	}
 	return (NULL);
 }
@@ -147,16 +162,34 @@ size_t		print_mem(t_arena_container *zones, char *type)
 	tot_size = 0;
 	while (tmp)
 	{
-		ft_printf("%s : %p\n", type, (long)(((t_addr_list *)tmp->first)->content));
+		ft_printf("%s : %p\n", type, (((t_addr_list *)tmp->first)->content));
 		tmp_l = tmp->zones;
 		st_tmp_l = tmp_l;
 		while(tmp_l)
 		{
 			tot_size += tmp_l->content_size;
 			if (tmp_l->content_size > 0)
-				ft_printf("%p - %p : %zu octets\n", (long)(tmp_l->content), (long)(tmp_l->content + tmp_l->content_size), tmp_l->content_size);
+				ft_printf("%p - %p : %zu octets\n", (tmp_l->content), (tmp_l->content + tmp_l->content_size), tmp_l->content_size);
 			tmp_l = (tmp_l->next == st_tmp_l) ? NULL : tmp_l->next;
 		}
+		tmp = tmp->prev;
+	}
+	return (tot_size);
+}
+
+size_t		print_big_mem(t_addr_list *zones, char *type)
+{
+	t_addr_list		*tmp;
+	size_t 				tot_size;
+
+	tmp = zones;
+	while (tmp->next)
+		tmp = tmp->next;
+	tot_size = 0;
+	while (tmp)
+	{
+		ft_printf("%s : %p\n%p - %p : %zu octets\n", type, tmp, tmp->content, tmp->content + tmp->content_size, tmp->content_size);
+		tot_size += tmp->content_size;
 		tmp = tmp->prev;
 	}
 	return (tot_size);
@@ -172,6 +205,8 @@ void		show_alloc_mem()
 		tot_size += print_mem(g_all_infos.tiny_mapping, "TINY");
 	if (g_all_infos.small_mapping)
 		tot_size += print_mem(g_all_infos.small_mapping, "SMALL");
+	if (g_all_infos.other_mapping)
+		tot_size += print_big_mem(g_all_infos.other_mapping, "LARGE");
 	ft_printf("Total : %zu octets\n", tot_size);
 }
 
@@ -186,10 +221,10 @@ int			main(void)
 	// t_arena_container *list;
 
 	i = -1;
-	while (++i <= 1024)
-		ft_malloc(i);
+	while (++i <= 50)
+		ft_malloc(i + 2048);
 		// printf("malloc nb %i at %p\n", i, ft_malloc(i));
-	// show_alloc_mem();
+	show_alloc_mem();
 	// list = g_all_infos.tiny_mapping;
 	// i = 0;
 	// while (list->next)
