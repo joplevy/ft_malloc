@@ -6,13 +6,19 @@
 #    By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/02 18:51:52 by jplevy            #+#    #+#              #
-#    Updated: 2018/10/02 19:03:39 by jplevy           ###   ########.fr        #
+#    Updated: 2018/10/04 19:58:06 by jplevy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftmalloc.a
+ifeq ($(HOSTTYPE),)
+HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+
+LN_NAME = libft_malloc.so
+NAME = libft_malloc_$(HOSTTYPE).so
+
 CC = gcc
-CFLAG = -c -Wall -Werror -Wextra
+CFLAG = -Wall -Werror -Wextra
 SRC_PATH = ./src/
 SRC_NAME = free.c \
 			malloc.c \
@@ -30,15 +36,19 @@ RM = rm -f
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(INCLUDE_FILE)
+$(NAME): $(OBJ)
 	@$(MAKE) -C $(LIBFT_PATH)
-	@cp $(LIBFT_PATH)$(LIBFT_NAME) $(NAME)
-	@$(AR) $(NAME) $(OBJ)
-	@$(RLIB) $(NAME)
+	@$(CC) $(CFLAG) $(OBJ) -shared -fPIC  -o $(NAME) -L./libft -lft
+	ln -fs $(NAME) $(LN_NAME)
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c  $(INCLUDE_FILE)
 	-@mkdir -p $(OBJ_PATH)
-	@$(CC) $(CFLAG) -o $@ -c $< -I./includes
+	@$(CC) $(CFLAG) -o $@ -c $<  -I./includes
+
+link:
+	export DYLD_LIBRARY_PATH=.
+	export DYLD_INSERT_LIBRARIES=$(LN_NAME) 
+	export DYLD_FORCE_FLAT_NAMESPACE=1
 
 clean:
 	@$(MAKE) -C $(LIBFT_PATH) clean
@@ -46,6 +56,6 @@ clean:
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT_PATH) fclean
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) $(LN_NAME)
 
 re: fclean all

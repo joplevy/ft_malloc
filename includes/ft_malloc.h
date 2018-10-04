@@ -17,6 +17,7 @@
 # include "libft.h"
 # include <sys/mman.h>
 # include <unistd.h>
+#include <stdlib.h>
 // # include <pthread.h>
 // # include <fcntl.h>
 // # define mmap(p1,p2,p3,p4,p5,p6) NULL
