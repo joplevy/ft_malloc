@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:38:42 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/04 17:26:04 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/05 19:00:32 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	ft_init_sizes()
 	g_all_infos.small_node_size = g_all_infos.small_size / 128;
 }
 
-void 	*ft_malloc(size_t size)
+void 	*malloc(size_t size)
 {
 	t_arena_container	*cont;
 	t_addr_list			*big;
@@ -156,6 +156,7 @@ void 	*ft_malloc(size_t size)
 			g_all_infos.other_mapping->prev = big;
 		big->next = g_all_infos.other_mapping;
 		g_all_infos.other_mapping = big;
+		return (g_all_infos.other_mapping->content);
 	}
 	return (NULL);
 }

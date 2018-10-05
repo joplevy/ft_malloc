@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 15:38:59 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/04 20:03:32 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/05 19:15:35 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@ int			main(void)
 	// t_arena_container *list;
 
 	i = -1;
-	while (++i <= 129)
+	show_alloc_mem();
+	while (++i <= 2)
 	{
-		if (i == 127)
-			ptr = ft_malloc(i);
+		if (i == 2)
+			ptr = malloc(i);
 		else
-			ft_malloc(i);
+		{
+			ptr = ptr;
+			malloc(i);
+		}
 	}
 	show_alloc_mem();
-	ft_free(ptr);
+	free(ptr);
     return (0);
 }

@@ -13,11 +13,12 @@
 #ifndef FT_MALLOC_H
 # define FT_MALLOC_H
 
-# include <stdio.h>
-# include "libft.h"
+// # include <stdio.h>
 # include <sys/mman.h>
 # include <unistd.h>
-#include <stdlib.h>
+
+# define HEXCHARS "0123456789ABCDEF"
+// #include <stdlib.h>
 // # include <pthread.h>
 // # include <fcntl.h>
 // # define mmap(p1,p2,p3,p4,p5,p6) NULL
@@ -65,11 +66,20 @@ void		show_alloc_mem();
 ** malloc
 */
 
-void 		*ft_malloc(size_t size);
+void 		*malloc(size_t size);
 
 /*
 ** free
 */
 
-void		ft_free(void *ptr);
+void		free(void *ptr);
+
+/*
+** mylib
+*/
+
+void    ft_putptr(void *ptr);
+void	ft_putnbr(size_t n);
+void	ft_putstr(char const *s);
+
 #endif
