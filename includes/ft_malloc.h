@@ -81,5 +81,6 @@ void		free(void *ptr);
 void    ft_putptr(void *ptr);
 void	ft_putnbr(size_t n);
 void	ft_putstr(char const *s);
+void	*ft_memset(void *b, int c, size_t len);
 
 #endif
