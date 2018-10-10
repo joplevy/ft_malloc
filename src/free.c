@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:40:34 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/10 17:36:18 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/10 17:37:15 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		ft_to_start(t_arena_container *arena, t_addr_list	*node, size_t size)
 	arena->nb_alloc -= 1;
 	if (arena->nb_alloc == 0)
 	{
+		//il faut regarder pour free arena
 		return (munmap(arena->first->content, size));
 	}
 	return(1);
