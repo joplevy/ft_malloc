@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:38:42 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/10 15:52:07 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/16 17:01:58 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	ft_init_sizes()
 	g_all_infos.small_node_size = g_all_infos.small_size / 128;
 }
 
-void 	*malloc(size_t size)
+void 	*ft_malloc(size_t size)
 {
 	t_arena_container	*cont;
 	t_addr_list			*big;

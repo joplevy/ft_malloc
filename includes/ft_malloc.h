@@ -60,19 +60,20 @@ extern t_all_infos g_all_infos;
 ** show_alloc_mem
 */
 
+size_t		print_mem(t_arena_container *zones, char *type);
 void		show_alloc_mem();
 
 /*
 ** malloc
 */
 
-void 		*malloc(size_t size);
+void 		*ft_malloc(size_t size);
 
 /*
 ** free
 */
 
-void		free(void *ptr);
+void		ft_free(void *ptr);
 
 /*
 ** mylib

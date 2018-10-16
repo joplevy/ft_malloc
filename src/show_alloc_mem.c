@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:41:21 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/05 18:58:59 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/16 16:42:35 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void			ft_print_line(void *ptr1, void *ptr2, size_t size)
 	ft_putstr(" octets\n");
 }
 
-static size_t		print_mem(t_arena_container *zones, char *type)
+size_t		print_mem(t_arena_container *zones, char *type)
 {
 	t_arena_container	*tmp;
 	t_addr_list				*tmp_l;
