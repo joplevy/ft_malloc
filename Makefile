@@ -6,7 +6,7 @@
 #    By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/02 18:51:52 by jplevy            #+#    #+#              #
-#    Updated: 2018/10/16 21:24:22 by jplevy           ###   ########.fr        #
+#    Updated: 2018/10/17 18:09:29 by jplevy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ CFLAG = -Wall -Werror -Wextra
 SRC_PATH = ./src/
 SRC_NAME = malloc.c \
 			mylib.c \
-			show_alloc_mem.c
+			show_alloc_mem.c \
+			free.c \
+			ft_realloc.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 OBJ_PATH = ./dst/
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))

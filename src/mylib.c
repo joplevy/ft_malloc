@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 17:59:35 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/05 19:18:13 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/17 17:59:55 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,19 @@ void	ft_putnbr(size_t n)
         c = '0' + n;
         write(1, &c, 1);
     }
+}
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	char	*temp1;
+	char	*temp2;
+
+	temp1 = (char *)src;
+	temp2 = (char *)dst;
+	while (n > 0)
+	{
+		temp2[n - 1] = temp1[n - 1];
+		n--;
+	}
+	return (dst);
 }

@@ -29,6 +29,8 @@ typedef struct					s_addr_list
 	size_t						content_size;
 	struct s_addr_list			*next;
 	struct s_addr_list			*prev;
+	void						*arena;
+	void						*arena_end;
 }								t_addr_list;
 
 // typedef struct					s_arena_container
@@ -64,12 +66,14 @@ extern t_all_infos g_all_infos;
 
 // size_t		print_mem(t_arena_container *zones, char *type);
 void		show_alloc_mem();
+void		show_freed_mem();
 
 /*
 ** malloc
 */
 
 void 		*ft_malloc(size_t size);
+void		ordered_put_node(t_addr_list **to, t_addr_list *node);
 
 /*
 ** free
@@ -85,5 +89,10 @@ void    ft_putptr(void *ptr);
 void	ft_putnbr(size_t n);
 void	ft_putstr(char const *s);
 void	*ft_memset(void *b, int c, size_t len);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
+/*
+**  realloc
+*/
+void	*ft_realloc(void *ptr, size_t size);
 #endif

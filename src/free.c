@@ -6,83 +6,76 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:40:34 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/16 17:02:05 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/17 19:02:03 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_malloc.h>
 
-int		ft_to_start(t_arena_container *arena, t_addr_list	*node, size_t size)
+t_addr_list	*get_last_node(t_addr_list *tmp, t_addr_list *arena)
 {
-	int		ret;
-
-	ft_memset(node->content, 0, node->content_size);
-	node->content_size = 0;
-	node->next->prev = node->prev;
-	node->prev->next = node->next;
-	node->next = arena->zones;
-	node->prev = arena->zones->prev;
-	arena->zones->prev->next = node;
-	arena->zones->next->prev = node;
-	arena->zones = node;
-	arena->nb_alloc -= 1;
-	if (arena->nb_alloc == 0)
+	while(tmp)
 	{
-		ret = munmap(arena->first->content, size);
-		arena->next->prev = arena->prev;
-		return (ret);
+		if  (!(tmp->next) || tmp->next->arena != arena)
+			return (tmp);
+		tmp = tmp->next;
 	}
-	return(1);
+	return (tmp);
 }
 
-int		ft_small_free(void *ptr, t_arena_container *cont)
+void	ft_clear_list(t_addr_list **empty, t_addr_list *node)
 {
-	size_t 				size;
-	t_arena_container	*tmp;
-	t_addr_list			*tmp1;
+	t_addr_list *tmp;
+	t_addr_list *first_node;
+	t_addr_list *last_node;
+	
+	tmp = *empty;
+	while (tmp && tmp->arena != node->arena)
+		tmp = tmp->next;
+	first_node = tmp;
+	last_node = get_last_node(tmp, node->arena);
+	if (first_node == *empty)
+		*empty = last_node->next;
+	if (first_node && first_node->prev)
+		first_node->prev->next = last_node->next;
+	if (last_node && last_node->next)
+		last_node->next->prev = first_node->prev;
+	munmap(first_node, (size_t)(((long)(first_node->next) - (long)first_node) * 128));
+}
 
-	tmp = cont;
-	size = (tmp == g_all_infos.small_mapping) ? g_all_infos.small_size  : g_all_infos.tiny_size;
+int		ft_deallocate(t_addr_list **from, t_addr_list **to, t_addr_list *node)
+{
+	int		clear;
+
+	clear = 0;
+	if (*from == node)
+		*from = node->next;
+	if (((node->prev && node->prev->arena != node->arena) \
+		|| !(node->prev))
+		&& ((node->next && node->next->arena != node->arena) \
+		|| !(node->next)))
+		clear = 1;
+	if (node->next)
+		node->next->prev = node->prev;
+	if (node->prev)
+		node->prev->next = node->next;
+	ft_memset(node->content, 0, node->content_size);
+	node->content_size = 0;
+	ordered_put_node(to, node);
+	if (clear == 1)
+		ft_clear_list(to, node);
+	return (1);
+}
+
+int		ft_small_free(void *ptr, t_addr_list **map, t_addr_list **e_map)
+{
+	t_addr_list			*tmp;
+
+	tmp = *map;
 	while (tmp)
 	{
-		// print_mem(tmp, "TINY");
-		if (tmp->first->content <= ptr && tmp->first->content + size > ptr)
-		{
-			tmp1 = tmp->zones;
-			while (tmp1)
-			{
-				if (tmp1->content == ptr)
-				{
-					int ret = ft_to_start(tmp, tmp1, size);
-					if (ret == 0)
-					{
-						if (tmp == g_all_infos.tiny_mapping)
-							g_all_infos.tiny_mapping = tmp->next;
-						else if (tmp == g_all_infos.small_mapping)
-							g_all_infos.small_mapping = tmp->next;
-						else
-						{
-							ft_putstr("toto \n");
-							tmp->prev->next = tmp->next;
-							// tmp->next->prev = tmp->next;
-						}
-						ft_memset(tmp, 0, sizeof(t_arena_container));
-					}
-					ft_putnbr(ret);
-					ft_putstr("tmp : ");
-					ft_putptr(tmp);
-					ft_putstr("\n");
-					ft_putstr("global : ");
-					ft_putptr(g_all_infos.tiny_mapping);
-					ft_putstr("\n");
-					ft_putstr("\n");
-					ft_putnbr(ret);
-					ft_putstr("\n");
-					return (ret);
-				}
-				tmp1=tmp1->next;
-			}
-		}
+		if (tmp->content == ptr)
+			return (ft_deallocate(map, e_map, tmp));
 		tmp = tmp->next;
 	}
 	return (-1);
@@ -97,11 +90,13 @@ int		ft_other_free(void *ptr)
 	{
 		if (tmp->content == ptr)
 		{
-			// printf("ptr found on big  %zu!\n", tmp->content_size);
-			ft_putnbr(tmp->content_size);
-			ft_putstr(" o big ptr found ");
-			ft_putptr(tmp->content);
-			ft_putstr("\n");
+			if (tmp == g_all_infos.other_mapping)
+				g_all_infos.other_mapping = tmp->next;
+			if (tmp->prev)
+				tmp->prev->next = tmp->next;
+			if (tmp->next)
+				tmp->next->prev = tmp->prev;
+			munmap(tmp, tmp->content_size + sizeof(t_addr_list));
 			return (0);
 		}
 		tmp = tmp->next;
@@ -111,10 +106,8 @@ int		ft_other_free(void *ptr)
 
 void		ft_free(void *ptr)
 {
-	ft_putptr(ptr);
-		ft_putstr(" <====\n");
-// dans malloc si le container est full, verifier que les autres ont pas eu de free depuis avant de refaire un container
-	if (ft_small_free(ptr, g_all_infos.tiny_mapping) >= 0 || ft_small_free(ptr, g_all_infos.small_mapping) >= 0)
+	if (ft_small_free(ptr, &(g_all_infos.tiny_mapping), &(g_all_infos.e_tiny_mapping)) >= 0 || ft_small_free(ptr, &(g_all_infos.small_mapping), &(g_all_infos.e_small_mapping)) >= 0)
 		return;
-	ft_other_free(ptr);
+	if (ft_other_free(ptr) >= 0)
+		return;
 }
