@@ -16,7 +16,7 @@
 // # include <stdio.h>
 # include <sys/mman.h>
 # include <unistd.h>
-
+# include <pthread.h>
 # define HEXCHARS "0123456789ABCDEF"
 // #include <stdlib.h>
 // # include <pthread.h>
@@ -28,9 +28,9 @@ typedef struct					s_addr_list
 	void						*content;
 	size_t						content_size;
 	struct s_addr_list			*next;
-	struct s_addr_list			*prev;
+	// struct s_addr_list			*prev;
 	void						*arena;
-	void						*arena_end;
+	// void						*arena_end;
 }								t_addr_list;
 
 // typedef struct					s_arena_container
@@ -58,7 +58,9 @@ typedef struct					s_all_infos
 }								t_all_infos;
 
 
+extern pthread_mutex_t g_mutex;
 extern t_all_infos g_all_infos;
+
 
 /*
 ** show_alloc_mem
@@ -67,19 +69,20 @@ extern t_all_infos g_all_infos;
 // size_t		print_mem(t_arena_container *zones, char *type);
 void		show_alloc_mem();
 void		show_freed_mem();
+void		show_mapping();
 
 /*
 ** malloc
 */
 
-void 		*ft_malloc(size_t size);
+void 		*malloc(size_t size);
 void		ordered_put_node(t_addr_list **to, t_addr_list *node);
 
 /*
 ** free
 */
 
-void		ft_free(void *ptr);
+void		free(void *ptr);
 
 /*
 ** mylib
@@ -94,5 +97,5 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 /*
 **  realloc
 */
-void	*ft_realloc(void *ptr, size_t size);
+void	*realloc(void *ptr, size_t size);
 #endif

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ccqqqqwq/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:38:42 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/19 14:32:39 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/18 16:10:55 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_all_infos g_all_infos = {
 	0,
 	0
 };
-pthread_mutex_t	g_mutex;
 
 t_addr_list		*ft_init_big(size_t size)
 {
@@ -36,9 +35,9 @@ t_addr_list		*ft_init_big(size_t size)
 	ret->content = (void*)((long)ret + (long)sizeof(t_addr_list));
 	ret->content_size = size;
 	ret->arena = ret;
-	// ret->arena_end = (void *)((long)ret + (long)(size + sizeof(t_addr_list)));
+	ret->arena_end = (void *)((long)ret + (long)(size + sizeof(t_addr_list)));
 	ret->next = NULL;
-	// ret->prev = NULL;
+	ret->prev = NULL;
 	return (ret);
 }
 
@@ -58,9 +57,9 @@ t_addr_list		*ft_init_one_map(size_t node_size)
 		tmp->content = (void*)((long)tmp + (long)sizeof(t_addr_list));
 		tmp->content_size = 0;
 		tmp->next = (i == 127) ? NULL : (void *)((long)tmp + (long)node_size);
-		// tmp->prev = (i == 0) ? NULL : (void *)((long)tmp - (long)node_size);
+		tmp->prev = (i == 0) ? NULL : (void *)((long)tmp - (long)node_size);
 		tmp->arena = (void *)ret;
-		// tmp->arena_end =  (void*)((long)ret + node_size * 128);
+		tmp->arena_end =  (void*)((long)ret + node_size * 128);
 		tmp = (void *)((long)tmp + (long)node_size);
 	
 	}
@@ -73,9 +72,9 @@ void	ft_init_sizes()
 
 	page_size = getpagesize();
 	g_all_infos.page_size = page_size;
-	g_all_infos.tiny_size = page_size * 3;
+	g_all_infos.tiny_size = page_size * 2;
 	g_all_infos.tiny_node_size = g_all_infos.tiny_size / 128;
-	g_all_infos.small_size = page_size * 33;
+	g_all_infos.small_size = page_size * 32;
 	g_all_infos.small_node_size = g_all_infos.small_size / 128;
 }
 
@@ -83,47 +82,47 @@ void	put_node_after(t_addr_list *node, t_addr_list *ref)
 {
 	if (ref->next)
 	{
-		// ref->next->prev = node;
+		ref->next->prev = node;
 		node->next = ref->next;
 	}
-	// node->prev = ref;
+	node->prev = ref;
 	ref->next = node;
 }
 
-// void	put_node_before(t_addr_list **to, t_addr_list *node, t_addr_list *ref)
-// {
-// 	if (ref == *to)
-// 	{
-// 		node->prev = NULL;
-// 		*to = node;
-// 	}
-// 	if (ref->prev)
-// 	{
-// 		ref->prev->next = node;
-// 		node->prev = ref->prev;
-// 	}
-// 	node->next = ref;
-// 	ref->prev = node;
-// }
+void	put_node_before(t_addr_list **to, t_addr_list *node, t_addr_list *ref)
+{
+	if (ref == *to)
+	{
+		node->prev = NULL;
+		*to = node;
+	}
+	if (ref->prev)
+	{
+		ref->prev->next = node;
+		node->prev = ref->prev;
+	}
+	node->next = ref;
+	ref->prev = node;
+}
 
 void	ordered_put_node(t_addr_list **to, t_addr_list *node)
 {
 	t_addr_list	*tmp;
 
-	node->next = ((*to) && (long)((*to)->content) > (long)(node->content)) ? (*to) : NULL;
-	// node->prev = NULL;
-	if (!(*to) ||  (long)((*to)->content) > (long)(node->content))
+	node->prev = NULL;
+	node->next = NULL;
+	if (!(*to))
 	{
 		*to = node;
 		return;
 	}
 	tmp = *to;
-	while (tmp->next && (long)(tmp->next->content) < (long)(node->content))
+	while (tmp->next && (long)(tmp->content) < (long)(node->content))
 		tmp = tmp->next;
-	// if ((long)(tmp->content) < (long)(node->content))
-	put_node_after(node, tmp);
-	// else
-		// put_node_before(to, node, tmp);
+	if ((long)(tmp->content) < (long)(node->content))
+		put_node_after(node, tmp);
+	else
+		put_node_before(to, node, tmp);
 }
 
 void	*ft_allocate(t_addr_list **from, t_addr_list **to, size_t size)
@@ -133,8 +132,9 @@ void	*ft_allocate(t_addr_list **from, t_addr_list **to, size_t size)
 	node = *from;
 	node->content_size = size;
 	*from = node->next;
+	if (*from)
+		(*from)->prev = NULL;
 	ordered_put_node(to, node);
-	pthread_mutex_unlock(&(g_mutex));
 	return (node->content);
 }
 
@@ -142,7 +142,6 @@ void 	*malloc(size_t size)
 {
 	t_addr_list	*big;
 
-	pthread_mutex_lock(&(g_mutex));
 	if (g_all_infos.tiny_size == 0 || g_all_infos.tiny_node_size == 0 \
 		|| g_all_infos.small_size == 0 || g_all_infos.small_node_size == 0)
 		ft_init_sizes();
@@ -170,12 +169,8 @@ void 	*malloc(size_t size)
 	else
 	{
 		if (!(big = ft_init_big(size)))
-		{
-			pthread_mutex_unlock(&(g_mutex));		
 			return (NULL);
-		}
 		ordered_put_node(&(g_all_infos.other_mapping), big);
-		pthread_mutex_unlock(&(g_mutex));		
 		return (big->content);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:41:21 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/17 15:32:26 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/18 15:04:54 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,37 @@ void		show_freed_mem()
 		tot_size += print_mem(g_all_infos.e_tiny_mapping,  "TINY : ");
 	if (g_all_infos.small_mapping)
 		tot_size += print_mem(g_all_infos.e_small_mapping, "SMALL : ");
+	ft_putstr("Total : ");
+	ft_putnbr(tot_size);
+	ft_putstr(" octets\n");
+}
+
+void		show_mapping()
+{
+	// faire le tri des zones
+	size_t 				tot_size;
+
+	tot_size = 0;	
+	if (g_all_infos.tiny_mapping)
+		tot_size += print_mem(g_all_infos.tiny_mapping,  "TINY : ");
+	else
+		ft_putstr("NO TINY MAPPING\n");
+	if (g_all_infos.e_tiny_mapping)
+		tot_size += print_mem(g_all_infos.e_tiny_mapping,  "EMPTY TINY : ");
+	else
+		ft_putstr("NO EMPTY TINY MAPPING\n");
+	if (g_all_infos.small_mapping)
+		tot_size += print_mem(g_all_infos.small_mapping, "SMALL : ");
+	else
+		ft_putstr("NO SMALL MAPPING\n");
+	if (g_all_infos.e_small_mapping)
+		tot_size += print_mem(g_all_infos.e_small_mapping, "EMPTY SMALL : ");
+	else
+		ft_putstr("NO EMPTY SMALL MAPPING\n");
+	if (g_all_infos.other_mapping)
+		tot_size += print_mem(g_all_infos.other_mapping, "LARGE : ");
+	else
+		ft_putstr("NO LARGE MAPPING\n");
 	ft_putstr("Total : ");
 	ft_putnbr(tot_size);
 	ft_putstr(" octets\n");
