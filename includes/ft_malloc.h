@@ -18,6 +18,8 @@
 # include <unistd.h>
 # include <pthread.h>
 # define HEXCHARS "0123456789ABCDEF"
+# include <fcntl.h>
+# define DEBUG 1
 // #include <stdlib.h>
 // # include <pthread.h>
 // # include <fcntl.h>
@@ -78,6 +80,8 @@ void		show_mapping();
 void 		*malloc(size_t size);
 void		ordered_put_node(t_addr_list **to, t_addr_list *node);
 
+void		ft_putstr_log(char *str);
+
 /*
 ** free
 */
@@ -88,9 +92,9 @@ void		free(void *ptr);
 ** mylib
 */
 
-void    ft_putptr(void *ptr);
-void	ft_putnbr(size_t n);
-void	ft_putstr(char const *s);
+void    ft_putptr_fd(void *ptr, int fd);
+void	ft_putnbr_fd(size_t n, int fd);
+void	ft_putstr_fd(char const *s, int fd);
 void	*ft_memset(void *b, int c, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 

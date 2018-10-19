@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:41:21 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/18 15:04:54 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/19 15:48:47 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 static void			ft_print_head(char *str, void *ptr)
 {
-	ft_putstr(str);
-	ft_putstr("0x");
-	ft_putptr(ptr);
-	ft_putstr("\n");
+	ft_putstr_fd(str, 1);
+	ft_putstr_fd("0x", 1);
+	ft_putptr_fd(ptr, 1);
+	ft_putstr_fd("\n", 1);
 }
 
 static void			ft_print_line(void *ptr1, void *ptr2, size_t size)
 {
-	ft_putstr("0x");
-	ft_putptr(ptr1);
-	ft_putstr(" - 0x");
-	ft_putptr(ptr2);
-	ft_putstr(" : ");
-	ft_putnbr(size);
-	ft_putstr(" octets\n");
+	ft_putstr_fd("0x", 1);
+	ft_putptr_fd(ptr1, 1);
+	ft_putstr_fd(" - 0x", 1);
+	ft_putptr_fd(ptr2, 1);
+	ft_putstr_fd(" : ", 1);
+	ft_putnbr_fd(size, 1);
+	ft_putstr_fd(" octets\n", 1);
 }
 
 static size_t		print_mem(t_addr_list *zones, char *type)
@@ -66,9 +66,9 @@ void		show_alloc_mem()
 		tot_size += print_mem(g_all_infos.small_mapping, "SMALL : ");
 	if (g_all_infos.other_mapping)
 		tot_size += print_mem(g_all_infos.other_mapping, "LARGE : ");
-	ft_putstr("Total : ");
-	ft_putnbr(tot_size);
-	ft_putstr(" octets\n");
+	ft_putstr_fd("Total : ", 1);
+	ft_putnbr_fd(tot_size, 1);
+	ft_putstr_fd(" octets\n", 1);
 }
 
 void		show_freed_mem()
@@ -81,9 +81,9 @@ void		show_freed_mem()
 		tot_size += print_mem(g_all_infos.e_tiny_mapping,  "TINY : ");
 	if (g_all_infos.small_mapping)
 		tot_size += print_mem(g_all_infos.e_small_mapping, "SMALL : ");
-	ft_putstr("Total : ");
-	ft_putnbr(tot_size);
-	ft_putstr(" octets\n");
+	ft_putstr_fd("Total : ", 1);
+	ft_putnbr_fd(tot_size, 1);
+	ft_putstr_fd(" octets\n", 1);
 }
 
 void		show_mapping()
@@ -95,24 +95,24 @@ void		show_mapping()
 	if (g_all_infos.tiny_mapping)
 		tot_size += print_mem(g_all_infos.tiny_mapping,  "TINY : ");
 	else
-		ft_putstr("NO TINY MAPPING\n");
+		ft_putstr_fd("NO TINY MAPPING\n", 1);
 	if (g_all_infos.e_tiny_mapping)
 		tot_size += print_mem(g_all_infos.e_tiny_mapping,  "EMPTY TINY : ");
 	else
-		ft_putstr("NO EMPTY TINY MAPPING\n");
+		ft_putstr_fd("NO EMPTY TINY MAPPING\n", 1);
 	if (g_all_infos.small_mapping)
 		tot_size += print_mem(g_all_infos.small_mapping, "SMALL : ");
 	else
-		ft_putstr("NO SMALL MAPPING\n");
+		ft_putstr_fd("NO SMALL MAPPING\n", 1);
 	if (g_all_infos.e_small_mapping)
 		tot_size += print_mem(g_all_infos.e_small_mapping, "EMPTY SMALL : ");
 	else
-		ft_putstr("NO EMPTY SMALL MAPPING\n");
+		ft_putstr_fd("NO EMPTY SMALL MAPPING\n", 1);
 	if (g_all_infos.other_mapping)
 		tot_size += print_mem(g_all_infos.other_mapping, "LARGE : ");
 	else
-		ft_putstr("NO LARGE MAPPING\n");
-	ft_putstr("Total : ");
-	ft_putnbr(tot_size);
-	ft_putstr(" octets\n");
+		ft_putstr_fd("NO LARGE MAPPING\n", 1);
+	ft_putstr_fd("Total : ", 1);
+	ft_putnbr_fd(tot_size, 1);
+	ft_putstr_fd(" octets\n", 1);
 }

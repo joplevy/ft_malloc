@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 17:59:35 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/17 17:59:55 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/19 15:42:12 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,38 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	ft_putstr(char const *s)
+void	ft_putstr_fd(char const *s, int fd)
 {
-	write(1, s, ft_strlen(s));
+	write(fd, s, ft_strlen(s));
 }
 
-void    ft_putptr(void *ptr)
+void    ft_putptr_fd(void *ptr, int fd)
 {
     long   val;
 
     val = (size_t)ptr;
     if (val > 15)
     {
-        ft_putptr((void  *)(val / 16));
-        ft_putptr((void *)(val % 16));
+        ft_putptr_fd((void  *)(val / 16), fd);
+        ft_putptr_fd((void *)(val % 16), fd);
     }
     else
-        write(1, &(HEXCHARS[val]), 1);
+        write(fd, &(HEXCHARS[val]), 1);
 }
 
-void	ft_putnbr(size_t n)
+void	ft_putnbr_fd(size_t n, int fd)
 {
     char c;
 
     if (n > 9)
     {
-        ft_putnbr(n / 10);
-        ft_putnbr(n % 10);
+        ft_putnbr_fd(n / 10, fd);
+        ft_putnbr_fd(n % 10, fd);
     }
     else
     {
         c = '0' + n;
-        write(1, &c, 1);
+        write(fd, &c, 1);
     }
 }
 

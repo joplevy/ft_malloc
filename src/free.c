@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:40:34 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/19 14:25:42 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/19 16:31:33 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,49 @@ int		ft_other_free(void *ptr)
 	return (-1);
 }
 
-void		free(void *ptr)
+void	output_f_log(void *ptr, char *str)
 {
+	int 	fd;
+
+	fd = open("malloc.logs", O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	ft_putstr_fd("ptr : ", fd);
+	ft_putptr_fd(ptr, fd);
+	ft_putstr_fd(str, fd);
+	ft_putstr_fd(" succesfully freed\n\n", fd);
+	close(fd);
+}
+
+void	entry_f_log(void *ptr)
+{
+	int 	fd;
+
+	fd = open("malloc.logs", O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	ft_putstr_fd("ask to free ", fd);
+	ft_putptr_fd(ptr, fd);
+	ft_putstr_fd(" bits\n", fd);
+	close(fd);
+}
+
+void		free(void *ptr)
+{	
 	pthread_mutex_lock(&(g_mutex));
+	if (DEBUG)
+		entry_f_log(ptr);
 	if (ft_small_free(ptr, &(g_all_infos.tiny_mapping), &(g_all_infos.e_tiny_mapping)) >= 0 || ft_small_free(ptr, &(g_all_infos.small_mapping), &(g_all_infos.e_small_mapping)) >= 0)
 	{
+		if (DEBUG)
+			output_f_log(ptr, " type SMALL | TINY ");
 		pthread_mutex_unlock(&(g_mutex));
 		return;
 	}
-	ft_other_free(ptr);
+	if ((ft_other_free(ptr)) >= 0)
+	{
+		if (DEBUG)
+			output_f_log(ptr, " type LARGE ");
+		pthread_mutex_unlock(&(g_mutex));
+		return;
+	}
+	if (DEBUG)
+		ft_putstr_log("Could not free ptr\n\n");
 	pthread_mutex_unlock(&(g_mutex));
 }

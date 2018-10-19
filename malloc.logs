@@ -1,0 +1,232 @@
+malloc asked for size : 32 bits
+malloc return ptr 104244020 for 32 bits
+
+ask to free 7FAD6A400090 bits
+Could not free ptr
+
+ask to free 7FAD6A400080 bits
+Could not free ptr
+
+ask to free 7FAD6A4000B0 bits
+Could not free ptr
+
+malloc asked for size : 32 bits
+malloc return ptr 104244080 for 32 bits
+
+ask to free 7FAD6A400160 bits
+Could not free ptr
+
+ask to free 7FAD6A800000 bits
+Could not free ptr
+
+malloc asked for size : 32 bits
+malloc return ptr 1042440E0 for 32 bits
+
+ask to free 7FAD6A600000 bits
+Could not free ptr
+
+ask to free 7FAD6A400100 bits
+Could not free ptr
+
+ask to free 7FAD6A600020 bits
+Could not free ptr
+
+malloc asked for size : 14 bits
+malloc return ptr 104244140 for 14 bits
+
+malloc asked for size : 45 bits
+malloc return ptr 1042441A0 for 45 bits
+
+malloc asked for size : 123 bits
+malloc return ptr 104247020 for 123 bits
+
+malloc asked for size : 45 bits
+malloc return ptr 104244200 for 45 bits
+
+malloc asked for size : 50 bits
+malloc return ptr 104244260 for 50 bits
+
+malloc asked for size : 47 bits
+malloc return ptr 1042442C0 for 47 bits
+
+malloc asked for size : 11 bits
+malloc return ptr 104244320 for 11 bits
+
+malloc asked for size : 64 bits
+malloc return ptr 104244380 for 64 bits
+
+malloc asked for size : 49 bits
+malloc return ptr 1042443E0 for 49 bits
+
+malloc asked for size : 67 bits
+malloc return ptr 104247440 for 67 bits
+
+malloc asked for size : 52 bits
+malloc return ptr 104244440 for 52 bits
+
+malloc asked for size : 54 bits
+malloc return ptr 1042444A0 for 54 bits
+
+malloc asked for size : 12 bits
+malloc return ptr 104244500 for 12 bits
+
+malloc asked for size : 45 bits
+malloc return ptr 104244560 for 45 bits
+
+malloc asked for size : 104 bits
+malloc return ptr 104247860 for 104 bits
+
+ask to free 0 bits
+Could not free ptr
+
+malloc asked for size : 16 bits
+malloc return ptr 1042445C0 for 16 bits
+
+malloc asked for size : 64 bits
+malloc return ptr 104244620 for 64 bits
+
+malloc asked for size : 14 bits
+malloc return ptr 104244680 for 14 bits
+
+malloc asked for size : 256 bits
+malloc return ptr 104247C80 for 256 bits
+
+ask to free 0 bits
+Could not free ptr
+
+ask to free 104247C80 bits
+ptr : 104247C80 type SMALL | TINY  succesfully freed
+
+malloc asked for size : 5 bits
+malloc return ptr 1042446E0 for 5 bits
+
+malloc asked for size : 100 bits
+malloc return ptr 104247C80 for 100 bits
+
+ask to free 1042446E0 bits
+ptr : 1042446E0 type SMALL | TINY  succesfully freed
+
+ask to free 0 bits
+Could not free ptr
+
+malloc asked for size : 32 bits
+malloc return ptr 10E443020 for 32 bits
+
+ask to free 7FF5E0D00000 bits
+Could not free ptr
+
+ask to free 7FF5E0C00080 bits
+Could not free ptr
+
+ask to free 7FF5E0D00020 bits
+Could not free ptr
+
+malloc asked for size : 32 bits
+malloc return ptr 10E443080 for 32 bits
+
+ask to free 7FF5E0F00050 bits
+Could not free ptr
+
+ask to free 7FF5E1000000 bits
+Could not free ptr
+
+malloc asked for size : 32 bits
+malloc return ptr 10E4430E0 for 32 bits
+
+ask to free 7FF5E0C00090 bits
+Could not free ptr
+
+ask to free 7FF5E0E00000 bits
+Could not free ptr
+
+ask to free 7FF5E0C000B0 bits
+Could not free ptr
+
+malloc asked for size : 14 bits
+malloc return ptr 10E443140 for 14 bits
+
+malloc asked for size : 45 bits
+malloc return ptr 10E4431A0 for 45 bits
+
+malloc asked for size : 123 bits
+malloc return ptr 10E446020 for 123 bits
+
+malloc asked for size : 45 bits
+malloc return ptr 10E443200 for 45 bits
+
+malloc asked for size : 50 bits
+malloc return ptr 10E443260 for 50 bits
+
+malloc asked for size : 47 bits
+malloc return ptr 10E4432C0 for 47 bits
+
+malloc asked for size : 11 bits
+malloc return ptr 10E443320 for 11 bits
+
+malloc asked for size : 64 bits
+malloc return ptr 10E443380 for 64 bits
+
+malloc asked for size : 49 bits
+malloc return ptr 10E4433E0 for 49 bits
+
+malloc asked for size : 67 bits
+malloc return ptr 10E446440 for 67 bits
+
+malloc asked for size : 52 bits
+malloc return ptr 10E443440 for 52 bits
+
+malloc asked for size : 54 bits
+malloc return ptr 10E4434A0 for 54 bits
+
+malloc asked for size : 12 bits
+malloc return ptr 10E443500 for 12 bits
+
+malloc asked for size : 45 bits
+malloc return ptr 10E443560 for 45 bits
+
+malloc asked for size : 104 bits
+malloc return ptr 10E446860 for 104 bits
+
+ask to free 0 bits
+Could not free ptr
+
+malloc asked for size : 16 bits
+malloc return ptr 10E4435C0 for 16 bits
+
+malloc asked for size : 64 bits
+malloc return ptr 10E443620 for 64 bits
+
+malloc asked for size : 14 bits
+malloc return ptr 10E443680 for 14 bits
+
+malloc asked for size : 256 bits
+malloc return ptr 10E446C80 for 256 bits
+
+ask to free 0 bits
+Could not free ptr
+
+ask to free 10E446C80 bits
+ptr : 10E446C80 type SMALL | TINY  succesfully freed
+
+malloc asked for size : 4096 bits
+malloc return ptr 10E467020 for 4096 bits
+
+malloc asked for size : 2160 bits
+malloc return ptr 10E469020 for 2160 bits
+
+ask to free 10E467020 bits
+ptr : 10E467020 type LARGE  succesfully freed
+
+malloc asked for size : 3312 bits
+malloc return ptr 10E4436E0 for 3312 bits
+
+malloc asked for size : 4096 bits
+malloc return ptr 10E443740 for 4096 bits
+
+ask to free 10E4436E0 bits
+ptr : 10E4436E0 type SMALL | TINY  succesfully freed
+
+ask to free 10E443740 bits
+Could not free ptr
+
+ask to free 0 bits

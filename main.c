@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/26 15:38:59 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/18 15:46:12 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/19 16:26:31 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ int			main(void)
 	str[3] = 'o';
 	str[4] = '\n';
 	// show_mapping();
-	ft_putstr(str);
+	ft_putstr_fd(str, 1);
 	str = realloc(str, 100);
-	// show_mapping();
-	ft_putstr(str);
+	show_mapping();
+	show_alloc_mem();
+	show_freed_mem();
+	ft_putstr_fd(str, 1);
+	free(NULL);
     return (0);
 }

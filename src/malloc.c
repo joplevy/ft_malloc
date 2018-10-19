@@ -6,7 +6,7 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:38:42 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/19 14:32:39 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/19 16:25:01 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,30 @@ void	ordered_put_node(t_addr_list **to, t_addr_list *node)
 		// put_node_before(to, node, tmp);
 }
 
+void	output_m_log(void *ptr, size_t size)
+{
+	int 	fd;
+
+	fd = open("malloc.logs", O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	ft_putstr_fd("malloc return ptr ", fd);
+	ft_putptr_fd(ptr, fd);
+	ft_putstr_fd(" for ", fd);
+	ft_putnbr_fd(size, fd);
+	ft_putstr_fd(" bits\n\n", fd);
+	close(fd);
+}
+
+void	entry_m_log(size_t size)
+{
+	int 	fd;
+
+	fd = open("malloc.logs", O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	ft_putstr_fd("malloc asked for size : ", fd);
+	ft_putnbr_fd(size, fd);
+	ft_putstr_fd(" bits\n", fd);
+	close(fd);
+}
+
 void	*ft_allocate(t_addr_list **from, t_addr_list **to, size_t size)
 {
 	t_addr_list	*node;
@@ -134,8 +158,20 @@ void	*ft_allocate(t_addr_list **from, t_addr_list **to, size_t size)
 	node->content_size = size;
 	*from = node->next;
 	ordered_put_node(to, node);
+	if (DEBUG)
+		output_m_log(node->content, node->content_size);
 	pthread_mutex_unlock(&(g_mutex));
 	return (node->content);
+}
+
+
+void	ft_putstr_log(char *str)
+{
+	int 	fd;
+
+	fd = open("malloc.logs", O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	ft_putstr_fd(str, fd);
+	close(fd);
 }
 
 void 	*malloc(size_t size)
@@ -146,15 +182,8 @@ void 	*malloc(size_t size)
 	if (g_all_infos.tiny_size == 0 || g_all_infos.tiny_node_size == 0 \
 		|| g_all_infos.small_size == 0 || g_all_infos.small_node_size == 0)
 		ft_init_sizes();
-	// ft_putnbr(g_all_infos.tiny_size);
-	// ft_putstr("\n");
-	// ft_putnbr(g_all_infos.tiny_node_size);
-	// ft_putstr("\n");
-	// ft_putnbr(g_all_infos.small_size);
-	// ft_putstr("\n");
-	// ft_putnbr(g_all_infos.small_node_size);
-	// ft_putstr("\n");
-	// ft_putstr("\n");
+	if (DEBUG)
+		entry_m_log(size);
 	if (size <= g_all_infos.tiny_node_size - sizeof(t_addr_list))
 	{
 		if (!(g_all_infos.e_tiny_mapping))
@@ -171,10 +200,14 @@ void 	*malloc(size_t size)
 	{
 		if (!(big = ft_init_big(size)))
 		{
+			if (DEBUG)
+				ft_putstr_log("\nCould not init big\n\n");
 			pthread_mutex_unlock(&(g_mutex));		
 			return (NULL);
 		}
 		ordered_put_node(&(g_all_infos.other_mapping), big);
+		if (DEBUG)
+			output_m_log(big->content, big->content_size);
 		pthread_mutex_unlock(&(g_mutex));		
 		return (big->content);
 	}
