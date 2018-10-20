@@ -1,232 +1,728 @@
 malloc asked for size : 32 bits
-malloc return ptr 104244020 for 32 bits
+malloc return ptr 10823B020 for 32 bits
 
-ask to free 7FAD6A400090 bits
+ask to free pointer 7FF203500000
 Could not free ptr
 
-ask to free 7FAD6A400080 bits
+ask to free pointer 7FF203400080
 Could not free ptr
 
-ask to free 7FAD6A4000B0 bits
-Could not free ptr
-
-malloc asked for size : 32 bits
-malloc return ptr 104244080 for 32 bits
-
-ask to free 7FAD6A400160 bits
-Could not free ptr
-
-ask to free 7FAD6A800000 bits
+ask to free pointer 7FF203500020
 Could not free ptr
 
 malloc asked for size : 32 bits
-malloc return ptr 1042440E0 for 32 bits
+malloc return ptr 10823B080 for 32 bits
 
-ask to free 7FAD6A600000 bits
+ask to free pointer 7FF203600060
 Could not free ptr
 
-ask to free 7FAD6A400100 bits
+ask to free pointer 7FF203800000
 Could not free ptr
 
-ask to free 7FAD6A600020 bits
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B0E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B140 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B1A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B200 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B260 for 64 bits
+
+calloc ret
+malloc asked for size : 32 bits
+malloc return ptr 10823B2C0 for 32 bits
+
+ask to free pointer 7FF203400090
 Could not free ptr
 
+ask to free pointer 7FF203600000
+Could not free ptr
+
+ask to free pointer 7FF2034000B0
+Could not free ptr
+
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B320 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B380 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B3E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B440 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B4A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B500 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B560 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B5C0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B620 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B680 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B6E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B740 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B7A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B800 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B860 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B8C0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B920 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B980 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823B9E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BA40 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BAA0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BB00 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BB60 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BBC0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BC20 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BC80 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BCE0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BD40 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BDA0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BE00 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BE60 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BEC0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BF20 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BF80 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823BFE0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C040 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C0A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C100 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C160 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C1C0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C220 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C280 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C2E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C340 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C3A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C400 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C460 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C4C0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C520 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C580 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C5E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C640 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C6A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C700 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C760 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C7C0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C820 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C880 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C8E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C940 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823C9A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CA00 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CA60 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CAC0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CB20 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CB80 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CBE0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CC40 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CCA0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CD00 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CD60 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CDC0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CE20 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CE80 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CEE0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CF40 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823CFA0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D000 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D060 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D0C0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D120 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D180 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D1E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D240 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D2A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D300 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D360 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D3C0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D420 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D480 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D4E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D540 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D5A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D600 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D660 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D6C0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D720 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D780 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D7E0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D840 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D8A0 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D900 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823D960 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 40 bits
+malloc return ptr 10823D9C0 for 40 bits
+
+calloc ret
+calloc call
+malloc asked for size : 64 bits
+malloc return ptr 10823DA20 for 64 bits
+
+calloc ret
+calloc call
+malloc asked for size : 56 bits
+malloc return ptr 10823DA80 for 56 bits
+
+calloc ret
+calloc call
+malloc asked for size : 176 bits
+malloc return ptr 10823E020 for 176 bits
+
+calloc ret
 malloc asked for size : 14 bits
-malloc return ptr 104244140 for 14 bits
+malloc return ptr 10823DAE0 for 14 bits
 
+calloc call
+malloc asked for size : 40 bits
+malloc return ptr 10823DB40 for 40 bits
+
+calloc ret
 malloc asked for size : 45 bits
-malloc return ptr 1042441A0 for 45 bits
+malloc return ptr 10823DBA0 for 45 bits
 
 malloc asked for size : 123 bits
-malloc return ptr 104247020 for 123 bits
+malloc return ptr 10823E440 for 123 bits
 
+calloc call
+malloc asked for size : 40 bits
+malloc return ptr 10823DC00 for 40 bits
+
+calloc ret
 malloc asked for size : 45 bits
-malloc return ptr 104244200 for 45 bits
+malloc return ptr 10823DC60 for 45 bits
 
 malloc asked for size : 50 bits
-malloc return ptr 104244260 for 50 bits
+malloc return ptr 10823DCC0 for 50 bits
 
+calloc call
+malloc asked for size : 40 bits
+malloc return ptr 10823DD20 for 40 bits
+
+calloc ret
 malloc asked for size : 47 bits
-malloc return ptr 1042442C0 for 47 bits
+malloc return ptr 10823DD80 for 47 bits
 
 malloc asked for size : 11 bits
-malloc return ptr 104244320 for 11 bits
+malloc return ptr 10823DDE0 for 11 bits
 
+calloc call
+malloc asked for size : 40 bits
+malloc return ptr 10823DE40 for 40 bits
+
+calloc ret
 malloc asked for size : 64 bits
-malloc return ptr 104244380 for 64 bits
+malloc return ptr 10823DEA0 for 64 bits
 
 malloc asked for size : 49 bits
-malloc return ptr 1042443E0 for 49 bits
+malloc return ptr 10823DF00 for 49 bits
 
+calloc call
+malloc asked for size : 40 bits
+malloc return ptr 10823DF60 for 40 bits
+
+calloc ret
 malloc asked for size : 67 bits
-malloc return ptr 104247440 for 67 bits
+malloc return ptr 10823E860 for 67 bits
 
 malloc asked for size : 52 bits
-malloc return ptr 104244440 for 52 bits
+malloc return ptr 10823DFC0 for 52 bits
 
+calloc call
+malloc asked for size : 40 bits
+malloc return ptr 10825F020 for 40 bits
+
+calloc ret
 malloc asked for size : 54 bits
-malloc return ptr 1042444A0 for 54 bits
+malloc return ptr 10825F080 for 54 bits
 
 malloc asked for size : 12 bits
-malloc return ptr 104244500 for 12 bits
+malloc return ptr 10825F0E0 for 12 bits
 
+calloc call
+malloc asked for size : 40 bits
+malloc return ptr 10825F140 for 40 bits
+
+calloc ret
 malloc asked for size : 45 bits
-malloc return ptr 104244560 for 45 bits
+malloc return ptr 10825F1A0 for 45 bits
 
+calloc call
+malloc asked for size : 32 bits
+malloc return ptr 10825F200 for 32 bits
+
+calloc ret
+calloc call
+malloc asked for size : 176 bits
+malloc return ptr 10823EC80 for 176 bits
+
+calloc ret
 malloc asked for size : 104 bits
-malloc return ptr 104247860 for 104 bits
+malloc return ptr 10823F0A0 for 104 bits
 
-ask to free 0 bits
+ask to free pointer 0
 Could not free ptr
 
 malloc asked for size : 16 bits
-malloc return ptr 1042445C0 for 16 bits
+malloc return ptr 10825F260 for 16 bits
 
 malloc asked for size : 64 bits
-malloc return ptr 104244620 for 64 bits
+malloc return ptr 10825F2C0 for 64 bits
 
 malloc asked for size : 14 bits
-malloc return ptr 104244680 for 14 bits
+malloc return ptr 10825F320 for 14 bits
 
+calloc call
+malloc asked for size : 124 bits
+malloc return ptr 10823F4C0 for 124 bits
+
+calloc ret
+realloc asked for size : 256 bits at pointer : 0
 malloc asked for size : 256 bits
-malloc return ptr 104247C80 for 256 bits
+malloc return ptr 10823F8E0 for 256 bits
 
-ask to free 0 bits
+0HERE => HERE ==> HERE ===> ask to free pointer 0
 Could not free ptr
 
-ask to free 104247C80 bits
-ptr : 104247C80 type SMALL | TINY  succesfully freed
+HARD realloc to ptr 10823F8E0 for 256 bits
 
-malloc asked for size : 5 bits
-malloc return ptr 1042446E0 for 5 bits
+ask to free pointer 10823F8E0
+ptr : 10823F8E0 type SMALL | TINY  succesfully freed
 
-malloc asked for size : 100 bits
-malloc return ptr 104247C80 for 100 bits
+malloc asked for size : 16777216 bits
+malloc return ptr 108262020 for 16777216 bits
 
-ask to free 1042446E0 bits
-ptr : 1042446E0 type SMALL | TINY  succesfully freed
+realloc asked for size : 134217728 bits at pointer : 108262020
+malloc asked for size : 134217728 bits
+malloc return ptr 10FCF2020 for 134217728 bits
 
-ask to free 0 bits
-Could not free ptr
+16777216HERE => Bonjours
+HERE ==> Bonjours
+HERE ===> Bonjours
+ask to free pointer 108262020
+ptr : 108262020 type LARGE  succesfully freed
 
-malloc asked for size : 32 bits
-malloc return ptr 10E443020 for 32 bits
+HARD realloc to ptr 10FCF2020 for 134217728 bits
 
-ask to free 7FF5E0D00000 bits
-Could not free ptr
-
-ask to free 7FF5E0C00080 bits
-Could not free ptr
-
-ask to free 7FF5E0D00020 bits
-Could not free ptr
-
-malloc asked for size : 32 bits
-malloc return ptr 10E443080 for 32 bits
-
-ask to free 7FF5E0F00050 bits
-Could not free ptr
-
-ask to free 7FF5E1000000 bits
-Could not free ptr
-
-malloc asked for size : 32 bits
-malloc return ptr 10E4430E0 for 32 bits
-
-ask to free 7FF5E0C00090 bits
-Could not free ptr
-
-ask to free 7FF5E0E00000 bits
-Could not free ptr
-
-ask to free 7FF5E0C000B0 bits
-Could not free ptr
-
-malloc asked for size : 14 bits
-malloc return ptr 10E443140 for 14 bits
-
-malloc asked for size : 45 bits
-malloc return ptr 10E4431A0 for 45 bits
-
-malloc asked for size : 123 bits
-malloc return ptr 10E446020 for 123 bits
-
-malloc asked for size : 45 bits
-malloc return ptr 10E443200 for 45 bits
-
-malloc asked for size : 50 bits
-malloc return ptr 10E443260 for 50 bits
-
-malloc asked for size : 47 bits
-malloc return ptr 10E4432C0 for 47 bits
-
-malloc asked for size : 11 bits
-malloc return ptr 10E443320 for 11 bits
-
-malloc asked for size : 64 bits
-malloc return ptr 10E443380 for 64 bits
-
-malloc asked for size : 49 bits
-malloc return ptr 10E4433E0 for 49 bits
-
-malloc asked for size : 67 bits
-malloc return ptr 10E446440 for 67 bits
-
-malloc asked for size : 52 bits
-malloc return ptr 10E443440 for 52 bits
-
-malloc asked for size : 54 bits
-malloc return ptr 10E4434A0 for 54 bits
-
-malloc asked for size : 12 bits
-malloc return ptr 10E443500 for 12 bits
-
-malloc asked for size : 45 bits
-malloc return ptr 10E443560 for 45 bits
-
-malloc asked for size : 104 bits
-malloc return ptr 10E446860 for 104 bits
-
-ask to free 0 bits
-Could not free ptr
-
-malloc asked for size : 16 bits
-malloc return ptr 10E4435C0 for 16 bits
-
-malloc asked for size : 64 bits
-malloc return ptr 10E443620 for 64 bits
-
-malloc asked for size : 14 bits
-malloc return ptr 10E443680 for 14 bits
-
-malloc asked for size : 256 bits
-malloc return ptr 10E446C80 for 256 bits
-
-ask to free 0 bits
-Could not free ptr
-
-ask to free 10E446C80 bits
-ptr : 10E446C80 type SMALL | TINY  succesfully freed
-
-malloc asked for size : 4096 bits
-malloc return ptr 10E467020 for 4096 bits
-
-malloc asked for size : 2160 bits
-malloc return ptr 10E469020 for 2160 bits
-
-ask to free 10E467020 bits
-ptr : 10E467020 type LARGE  succesfully freed
-
-malloc asked for size : 3312 bits
-malloc return ptr 10E4436E0 for 3312 bits
-
-malloc asked for size : 4096 bits
-malloc return ptr 10E443740 for 4096 bits
-
-ask to free 10E4436E0 bits
-ptr : 10E4436E0 type SMALL | TINY  succesfully freed
-
-ask to free 10E443740 bits
-Could not free ptr
-
-ask to free 0 bits
+033121120224033604480560033124848644848484848484848484848484848484848484848484848484848484848484857124848484848486448102410481072109611128961120134448484848484815681400000000000000000000000000000006400000000000000000000000000000000000000000000000000000000000000000000000000000000000006400000000000000000000000000000400004000000040000004000000004000040000640040000400000400004000040004000000040000400040000000000000000000000000000006400000000400000400064100811841384160806410081184138416080000064100811840640640641008118406406400000000641008118411206406410081184064064000000000000000000000000000000000400000000000400000400000400000000400064064000006406406406406406406406406406406406406406406400006406406406406406406410081184138416081864000000000640641008118413840000000641008118413841608186406410081184138400000006410081184138416081864215224722832324036964208064100811840064000006406489610641248000145600640000064064000000000000000640000000000000640064000331206406410081184138400000000000000641008118413841608186421522472283200040000640000003312024482472000003312331214216438624864214821382164488362121212121212121212121212135605207046082103312112022403360448056003312484864484848484848484848484848484848484848484848484848484848484848485712484848484848644810241048107210961112896112013444848484848481568140000000000001677721600167772160016777216001000

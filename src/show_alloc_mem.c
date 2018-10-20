@@ -6,36 +6,17 @@
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:41:21 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/19 15:48:47 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/20 16:30:01 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_malloc.h>
 
-static void			ft_print_head(char *str, void *ptr)
-{
-	ft_putstr_fd(str, 1);
-	ft_putstr_fd("0x", 1);
-	ft_putptr_fd(ptr, 1);
-	ft_putstr_fd("\n", 1);
-}
-
-static void			ft_print_line(void *ptr1, void *ptr2, size_t size)
-{
-	ft_putstr_fd("0x", 1);
-	ft_putptr_fd(ptr1, 1);
-	ft_putstr_fd(" - 0x", 1);
-	ft_putptr_fd(ptr2, 1);
-	ft_putstr_fd(" : ", 1);
-	ft_putnbr_fd(size, 1);
-	ft_putstr_fd(" octets\n", 1);
-}
-
-static size_t		print_mem(t_addr_list *zones, char *type)
+static size_t	print_mem(t_addr_list *zones, char *type, int fd)
 {
 	void			*last_addr;
 	t_addr_list		*tmp;
-	size_t 			tot_size;
+	size_t			tot_size;
 
 	tot_size = 0;
 	tmp = zones;
@@ -45,74 +26,69 @@ static size_t		print_mem(t_addr_list *zones, char *type)
 		if (last_addr != tmp->arena)
 		{
 			last_addr = tmp->arena;
-			ft_print_head(type, tmp->arena);
+			ft_print_head(type, tmp->arena, fd);
 		}
-		ft_print_line(tmp->content, tmp->content + tmp->content_size, tmp->content_size);
-		tot_size +=tmp->content_size;
+		ft_print_line(tmp->content, tmp->content + tmp->content_size, \
+			tmp->content_size, fd);
+		tot_size += tmp->content_size;
 		tmp = tmp->next;
 	}
 	return (tot_size);
 }
 
-void		show_alloc_mem()
+void			show_alloc_mem(void)
 {
-	// faire le tri des zones
-	size_t 				tot_size;
+	size_t	tot_size;
 
-	tot_size = 0;	
+	pthread_mutex_lock(&(g_mutex));
+	tot_size = 0;
 	if (g_all_infos.tiny_mapping)
-		tot_size += print_mem(g_all_infos.tiny_mapping,  "TINY : ");
+		tot_size += print_mem(g_all_infos.tiny_mapping, "TINY : ", 1);
 	if (g_all_infos.small_mapping)
-		tot_size += print_mem(g_all_infos.small_mapping, "SMALL : ");
+		tot_size += print_mem(g_all_infos.small_mapping, "SMALL : ", 1);
 	if (g_all_infos.other_mapping)
-		tot_size += print_mem(g_all_infos.other_mapping, "LARGE : ");
+		tot_size += print_mem(g_all_infos.other_mapping, "LARGE : ", 1);
 	ft_putstr_fd("Total : ", 1);
 	ft_putnbr_fd(tot_size, 1);
 	ft_putstr_fd(" octets\n", 1);
+	pthread_mutex_unlock(&(g_mutex));
 }
 
-void		show_freed_mem()
+void			show_freed_mem(void)
 {
-	// faire le tri des zones
-	size_t 				tot_size;
+	size_t	tot_size;
 
-	tot_size = 0;	
+	pthread_mutex_lock(&(g_mutex));
+	tot_size = 0;
 	if (g_all_infos.tiny_mapping)
-		tot_size += print_mem(g_all_infos.e_tiny_mapping,  "TINY : ");
+		tot_size += print_mem(g_all_infos.e_tiny_mapping, "TINY : ", 1);
 	if (g_all_infos.small_mapping)
-		tot_size += print_mem(g_all_infos.e_small_mapping, "SMALL : ");
+		tot_size += print_mem(g_all_infos.e_small_mapping, "SMALL : ", 1);
 	ft_putstr_fd("Total : ", 1);
 	ft_putnbr_fd(tot_size, 1);
 	ft_putstr_fd(" octets\n", 1);
+	pthread_mutex_unlock(&(g_mutex));
 }
 
-void		show_mapping()
+void			show_mapping(int fd)
 {
-	// faire le tri des zones
-	size_t 				tot_size;
+	size_t	tot_size;
 
-	tot_size = 0;	
+	pthread_mutex_lock(&(g_mutex));
+	tot_size = 0;
 	if (g_all_infos.tiny_mapping)
-		tot_size += print_mem(g_all_infos.tiny_mapping,  "TINY : ");
-	else
-		ft_putstr_fd("NO TINY MAPPING\n", 1);
+		tot_size += print_mem(g_all_infos.tiny_mapping, "TINY : ", fd);
 	if (g_all_infos.e_tiny_mapping)
-		tot_size += print_mem(g_all_infos.e_tiny_mapping,  "EMPTY TINY : ");
-	else
-		ft_putstr_fd("NO EMPTY TINY MAPPING\n", 1);
+		tot_size += print_mem(g_all_infos.e_tiny_mapping, "EMPTY TINY : ", fd);
 	if (g_all_infos.small_mapping)
-		tot_size += print_mem(g_all_infos.small_mapping, "SMALL : ");
-	else
-		ft_putstr_fd("NO SMALL MAPPING\n", 1);
+		tot_size += print_mem(g_all_infos.small_mapping, "SMALL : ", fd);
 	if (g_all_infos.e_small_mapping)
-		tot_size += print_mem(g_all_infos.e_small_mapping, "EMPTY SMALL : ");
-	else
-		ft_putstr_fd("NO EMPTY SMALL MAPPING\n", 1);
+		tot_size += print_mem(g_all_infos.e_small_mapping, "EMPTY SMALL : ", \
+			fd);
 	if (g_all_infos.other_mapping)
-		tot_size += print_mem(g_all_infos.other_mapping, "LARGE : ");
-	else
-		ft_putstr_fd("NO LARGE MAPPING\n", 1);
-	ft_putstr_fd("Total : ", 1);
-	ft_putnbr_fd(tot_size, 1);
-	ft_putstr_fd(" octets\n", 1);
+		tot_size += print_mem(g_all_infos.other_mapping, "LARGE : ", fd);
+	ft_putstr_fd("Total : ", fd);
+	ft_putnbr_fd(tot_size, fd);
+	ft_putstr_fd(" octets\n", fd);
+	pthread_mutex_unlock(&(g_mutex));
 }

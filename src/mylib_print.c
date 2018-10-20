@@ -1,54 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mylib.c                                            :+:      :+:    :+:   */
+/*   mylib_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 17:59:35 by jplevy            #+#    #+#             */
-/*   Updated: 2018/10/20 15:48:21 by jplevy           ###   ########.fr       */
+/*   Updated: 2018/10/20 15:55:05 by jplevy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_malloc.h>
 
-void	*ft_memset(void *b, int c, size_t len)
+void	ft_putstr_fd(char const *s, int fd)
 {
-	unsigned char	*temp;
-
-	temp = (unsigned char *)b;
-	while (len > 0)
-	{
-		temp[len - 1] = (unsigned char)c;
-		len--;
-	}
-	return (b);
+	write(fd, s, ft_strlen(s));
 }
 
-size_t	ft_strlen(const char *s)
+void	ft_putptr_fd(void *ptr, int fd)
 {
-	size_t	i;
+	long	val;
 
-	i = 0;
-	if (s)
+	val = (size_t)ptr;
+	if (val > 15)
 	{
-		while (s[i] != '\0')
-			i++;
+		ft_putptr_fd((void *)(val / 16), fd);
+		ft_putptr_fd((void *)(val % 16), fd);
 	}
-	return (i);
+	else
+		write(fd, &(HEXCHARS[val]), 1);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	ft_putnbr_fd(size_t n, int fd)
 {
-	char	*temp1;
-	char	*temp2;
+	char	c;
 
-	temp1 = (char *)src;
-	temp2 = (char *)dst;
-	while (n > 0)
+	if (n > 9)
 	{
-		temp2[n - 1] = temp1[n - 1];
-		n--;
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
 	}
-	return (dst);
+	else
+	{
+		c = '0' + n;
+		write(fd, &c, 1);
+	}
+}
+
+void	ft_putstr_log(char *str)
+{
+	int		fd;
+
+	fd = open("malloc.logs", O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	ft_putstr_fd(str, fd);
+	close(fd);
 }
