@@ -6,7 +6,7 @@
 #    By: jplevy <jplevy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/02 18:51:52 by jplevy            #+#    #+#              #
-#    Updated: 2018/10/20 17:27:03 by jplevy           ###   ########.fr        #
+#    Updated: 2018/10/20 18:36:44 by jplevy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,14 +47,8 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c  $(INCLUDE_FILE)
 	-@mkdir -p $(OBJ_PATH)
 	@$(CC) $(CFLAG) -o $@ -c $<  -I./includes
 
-link:
-	@export DYLD_LIBRARY_PATH=.
-	@export DYLD_INSERT_LIBRARIES=$(LN_NAME) 
-	@export DYLD_FORCE_FLAT_NAMESPACE=1
-
 clean:
 	@$(RM) $(OBJ)
-	@export DYLD_INSERT_LIBRARIES=""
 
 fclean: clean
 	@$(RM) $(NAME)
